@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+
+<script>
+let x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+// function showPosition(position) {
+ 
+
+// var latitude = position.coords.latitude;
+//   var longitude = position.coords.longitude;
+
+//   x.innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+// //   localStorage.setItem('latitude', JSON.stringify(latitude));
+// //   localStorage.setItem('longitude', JSON.stringify(longitude));
+//  var coordinates = [latitude, longitude];
+
+//   localStorage.setItem('coordinates', JSON.stringify(coordinates));
+// }
+function showPosition(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+
+  x.innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+  // Create an object with latitude and longitude properties
+  var coordinates = {
+    latitude: latitude,
+    longitude: longitude
+  };
+
+  var storeCoordinates = localStorage.getItem('coordinates');
+
+  var coordinateArray = storeCoordinates ? JSON.parse(storeCoordinates) : [];
+
+  coordinateArray.push(coordinates);
+
+  localStorage.setItem('coordinates', JSON.stringify(coordinateArray));
+}
+
+</script>
+</body>
+</html>
